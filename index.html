@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP8266 PWM Control</title>
+    <title>ESP8266 PWM Control - 10-Bit Extended Range</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f9; }
         .card { display: inline-block; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); width: 85%; max-width: 400px; }
@@ -15,9 +15,9 @@
 </head>
 <body>
     <div class="card">
-        <h2>Điều Khiển LED PWM</h2>
-        <p>Độ sáng: <span id="pwmDisplay" class="val-text">0</span> / 255</p>
-        <input type="range" min="0" max="255" value="0" class="slider" id="ledSlider">
+        <h2>Điều Khiển LED PWM (10-bit)</h2>
+        <p>Giá trị ADC / PWM: <span id="pwmDisplay" class="val-text">0</span> / 1023</p>
+        <input type="range" min="0" max="1023" value="0" class="slider" id="ledSlider">
     </div>
 
     <script type="module">
@@ -25,7 +25,7 @@
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // Điền Web API Key
+            apiKey: "YOUR_API_KEY",
             authDomain: "pwm-757e4.firebaseapp.com",
             databaseURL: "https://pwm-757e4-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "pwm-757e4",
@@ -41,7 +41,7 @@
         const slider = document.getElementById('ledSlider');
         const display = document.getElementById('pwmDisplay');
 
-        // Lấy giá trị hiện tại trên Firebase về giao diện web
+        // Lấy giá trị từ Firebase về giao diện
         onValue(pwmRef, (snapshot) => {
             const val = snapshot.val() || 0;
             slider.value = val;
